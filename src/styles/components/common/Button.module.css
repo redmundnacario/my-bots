@@ -1,0 +1,14 @@
+.button {
+    text-decoration: none;
+    min-width: 150px;
+    height: 40px;
+    border: none;
+    border-radius: 7.5px;
+    align-self: flex-end;
+    font-family: "Noto Sans JP", sans-serif;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: white !important;
+}

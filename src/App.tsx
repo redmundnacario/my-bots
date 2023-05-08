@@ -1,26 +1,37 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { Provider } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+
+import { PersistGate } from "redux-persist/integration/react";
+
+import Navbar from "@components/common/Navbar";
+import EditBotPage from "@pages/bots/edit";
+import AddBotPage from "@pages/bots/add";
+import BotIndexPage from "@pages/bots";
+import HomeIndexPage from "@pages/index";
+import { persistor, store } from "@store/index";
+
+import styles from "@styles/App.module.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <div className={styles.app}>
+                    <Navbar />
+                    <Routes>
+                        <Route path="/" element={<HomeIndexPage />} />
+                        <Route path="bots/:botId" element={<BotIndexPage />} />
+                        <Route
+                            path="bots/edit/:botId"
+                            element={<EditBotPage />}
+                        />
+                        <Route path="bots/add" element={<AddBotPage />} />
+                        {/* <Route path="*" element={<NotFound />} /> */}
+                    </Routes>
+                </div>
+            </PersistGate>
+        </Provider>
+    );
 }
 
 export default App;
