@@ -10,3 +10,9 @@
     top: 0;
     width: 100%;
 }
+
+.navigationItems {
+    width: 50vw;
+    display: flex;
+    justify-content: space-between;
+}

@@ -3,14 +3,17 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import botListReducer from "@store/reducers/BotList";
+import userReducer from "@store/reducers/User";
 
 const rootReducer = combineReducers({
   botList: botListReducer,
+  user: userReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

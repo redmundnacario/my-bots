@@ -11,7 +11,7 @@ export type WithEditBotType = {
   data?: BotDataType;
   botId?: string;
   formData?: BotDataType;
-  handleChange?: (e: ChangeEvent<HTMLInputElement>, label: string) => void;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSave?: () => void;
 };
 
@@ -31,8 +31,11 @@ const WithEditBot = <T,>(
 
     const [formData, setFormData] = useState<BotDataType>({ ...data! });
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>, label: string) => {
-      setFormData({ ...formData, [label]: e.target.value });
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target);
+      const { name, value } = e.target;
+      console.log(name, value);
+      setFormData({ ...formData, [name]: value });
     };
 
     const handleSave = () => {

@@ -14,7 +14,7 @@ const WithBotListData = <T,>(
   const ComponentWithBotListData: React.ComponentType<
     T & WithBotListDataType
   > = (props: T) => {
-    const { data } = useSelector(selectBotsListState);
+    const data = useSelector(selectBotsListState);
 
     return <Component {...props} data={data} />;
   };

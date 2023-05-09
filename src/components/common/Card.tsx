@@ -3,9 +3,9 @@ import React, { ReactElement } from "react";
 import styles from "@styles/components/common/Card.module.css";
 
 type CardType = {
-    header: string | ReactElement;
+    header?: string | ReactElement;
     body: string | ReactElement;
-    footer: string | ReactElement;
+    footer?: string | ReactElement;
 };
 
 const Card: React.FC<CardType> = ({ header, body, footer }) => {

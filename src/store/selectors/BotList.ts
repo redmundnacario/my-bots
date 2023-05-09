@@ -6,7 +6,7 @@ export const selectState = (state: RootState): BotsListState => state.botList;
 
 export const selectBotsListState = createSelector(
     [selectState],
-    (state) => state
+    (state) => state.data
 );
 
 export const selectSingleBotById = createSelector(

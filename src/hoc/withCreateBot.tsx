@@ -6,7 +6,7 @@ import { appendBot } from "@store/reducers/BotList";
 
 export type WithCreateBotType = {
   formData?: CreateBotFormType;
-  handleChange?: (e: ChangeEvent<HTMLInputElement>, label: string) => void;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSave?: () => void;
 };
 
@@ -23,8 +23,9 @@ const WithCreateBot = <T,>(
       purpose: "",
     });
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>, label: string) => {
-      setFormData({ ...formData, [label]: e.target.value });
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
     };
 
     const handleSave = () => {

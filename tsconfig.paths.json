@@ -4,6 +4,7 @@
         "paths": {
             "@components/*": ["./components/*"],
             "@hoc/*": ["./hoc/*"],
+            "@googleFirebase/*": ["./firebase/*"],
             "@models/*": ["./models/*"],
             "@pages/*": ["./pages/*"],
             "@store/*": ["./store/*"],

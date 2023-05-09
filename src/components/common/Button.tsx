@@ -7,7 +7,7 @@ type VariantType = "Primary" | "Danger" | undefined;
 type ButtonType = {
     variant?: VariantType;
     content: string;
-    handleClick: () => void;
+    handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 const Button: React.FC<ButtonType> = ({
@@ -39,7 +39,7 @@ const Button: React.FC<ButtonType> = ({
         <button
             className={styles.button}
             style={setColor(variant)}
-            onClick={() => handleClick()}
+            onClick={(e) => handleClick(e)}
         >
             {content}
         </button>

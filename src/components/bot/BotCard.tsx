@@ -3,11 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@components/common/Button";
+import Card from "@components/common/Card";
 import { BotDataType } from "@models/entities";
 import { removeBot } from "@store/reducers/BotList";
-
-// import styles from "@styles/components/home/BotCard.module.css";
-import Card from "@components/common/Card";
 
 type BotCardType = {
     data: BotDataType;

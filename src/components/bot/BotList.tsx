@@ -5,7 +5,7 @@ import Button from "@components/common/Button";
 import { BotListDataType } from "@models/entities";
 import BotCard from "./BotCard";
 
-import styles from "@styles/components/home/BotList.module.css";
+import styles from "@styles/components/bot/BotList.module.css";
 
 type BotListType = {
     data?: BotListDataType;
