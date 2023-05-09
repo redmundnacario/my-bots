@@ -6,7 +6,7 @@ import styles from "@styles/pages/HomeIndexPage.module.css";
 const SignInPage: React.FC = () => {
   return (
     <div className={styles.homePage}>
-      <Card body={<SignIn />} />
+      <Card header={<h2>Log In</h2>} body={<SignIn />} />
     </div>
   );
 };

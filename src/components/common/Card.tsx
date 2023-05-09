@@ -11,9 +11,9 @@ type CardType = {
 const Card: React.FC<CardType> = ({ header, body, footer }) => {
     return (
         <div className={styles.card}>
-            <div className={styles.cardContent}>{header}</div>
+            {header && <div className={styles.cardContent}>{header}</div>}
             <div>{body}</div>
-            <div className={styles.footer}>{footer}</div>
+            {footer && <div className={styles.footer}>{footer}</div>}
         </div>
     );
 };

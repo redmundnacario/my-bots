@@ -8,18 +8,17 @@ import {
     createUserProfileDocument,
 } from "@googleFirebase/firebase.utils";
 
-// import "./sign-up.component.scss";
+import styles from "@styles/components/auth/SignIn.module.css";
 
 const SignUp = () => {
     const navigate = useNavigate();
     const signUpId = useId();
     const [info, setInfo] = useState({
-        displayName: "",
         email: "",
         password: "",
         confirmPassword: "",
     });
-    const { displayName, email, password, confirmPassword } = info;
+    const { email, password, confirmPassword } = info;
 
     const handleSubmit = async () => {
         if (password !== confirmPassword) {
@@ -34,7 +33,6 @@ const SignUp = () => {
             );
             await createUserProfileDocument(user).then(() => {
                 setInfo({
-                    displayName: "",
                     email: "",
                     password: "",
                     confirmPassword: "",
@@ -42,7 +40,8 @@ const SignUp = () => {
                 navigate("/");
             });
         } catch (error) {
-            console.error(error);
+            alert((error as Error).message);
+            console.error((error as Error).message);
         }
     };
 
@@ -53,18 +52,7 @@ const SignUp = () => {
 
     return (
         <div className="sign-up">
-            <h2 className="title">Create Account</h2>
             <form>
-                <Input
-                    id={`${signUpId}-displayName`}
-                    name="displayName"
-                    type="text"
-                    value={displayName}
-                    handleChange={handleChange}
-                    label="Name"
-                    required
-                />
-
                 <Input
                     id={`${signUpId}-email`}
                     name="email"
@@ -95,11 +83,13 @@ const SignUp = () => {
                     required
                 />
             </form>
-            <Button
-                content="Sign Up"
-                handleClick={handleSubmit}
-                variant="Primary"
-            />
+            <div className={styles.buttons}>
+                <Button
+                    content="Sign Up"
+                    handleClick={handleSubmit}
+                    variant="Primary"
+                />
+            </div>
         </div>
     );
 };

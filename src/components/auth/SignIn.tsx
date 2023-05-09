@@ -28,7 +28,8 @@ const SignIn = () => {
                     navigate("/");
                 });
         } catch (error) {
-            console.log(error);
+            alert((error as Error).message);
+            console.error((error as Error).message);
         }
     };
 
@@ -39,9 +40,7 @@ const SignIn = () => {
     };
 
     return (
-        <div className={styles.signIn}>
-            <h2>Log In</h2>
-
+        <div>
             <form>
                 <Input
                     id={`${signInId}-Email`}
@@ -62,15 +61,14 @@ const SignIn = () => {
                     label="Password"
                     required
                 />
-
-                <div className={styles.buttons}>
-                    <Button
-                        content="Sign In"
-                        handleClick={handleSubmit}
-                        variant="Primary"
-                    />
-                </div>
             </form>
+            <div className={styles.buttons}>
+                <Button
+                    content="Sign In"
+                    handleClick={handleSubmit}
+                    variant="Primary"
+                />
+            </div>
         </div>
     );
 };
