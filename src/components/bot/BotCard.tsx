@@ -17,6 +17,7 @@ const BotCard: React.FC<BotCardType> = ({ data }) => {
 
     return (
         <Card
+            avatar={data.avatar}
             header={
                 <h3 onClick={() => navigate(`/bots/${data.id}`)}>
                     {data.name}

@@ -2,6 +2,7 @@ export type BotDataType = {
     id: number;
     name: string;
     purpose: string;
+    avatar?: string;
 };
 
 export type BotListDataType = BotDataType[];

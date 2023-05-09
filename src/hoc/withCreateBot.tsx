@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { CreateBotFormType } from "@models/entities";
 import { appendBot } from "@store/reducers/BotList";
 
+import { getAvatarName } from "@utilities/bot";
+
 export type WithCreateBotType = {
   formData?: CreateBotFormType;
   handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -29,7 +31,13 @@ const WithCreateBot = <T,>(
     };
 
     const handleSave = () => {
-      dispatch(appendBot(formData));
+      // create avatar
+      dispatch(
+        appendBot({
+          ...formData,
+          avatar: `https://api.dicebear.com/6.x/bottts/svg?seed=${getAvatarName()}&size=96`,
+        })
+      );
     };
 
     return (

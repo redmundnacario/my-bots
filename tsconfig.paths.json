@@ -3,12 +3,14 @@
         "baseUrl": "./src",
         "paths": {
             "@components/*": ["./components/*"],
+            "@constants/*": ["./constants/*"],
             "@hoc/*": ["./hoc/*"],
             "@googleFirebase/*": ["./firebase/*"],
             "@models/*": ["./models/*"],
             "@pages/*": ["./pages/*"],
             "@store/*": ["./store/*"],
-            "@styles/*": ["./styles/*"]
+            "@styles/*": ["./styles/*"],
+            "@utilities/*": ["./utilities/*"]
         }
     }
 }
