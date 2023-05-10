@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "@components/common/Button";
 import Input from "@components/common/Input";
+import Spinner from "@components/common/Spinner";
 import {
     auth,
     createUserProfileDocument,
@@ -13,6 +14,7 @@ import styles from "@styles/components/auth/SignIn.module.css";
 const SignUp = () => {
     const navigate = useNavigate();
     const signUpId = useId();
+    const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({
         email: "",
         password: "",
@@ -21,6 +23,7 @@ const SignUp = () => {
     const { email, password, confirmPassword } = info;
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
@@ -37,9 +40,11 @@ const SignUp = () => {
                     password: "",
                     confirmPassword: "",
                 });
-                navigate("/");
+                navigate("/bots");
+                setIsLoading(false);
             });
         } catch (error) {
+            setIsLoading(false);
             alert((error as Error).message);
             console.error((error as Error).message);
         }
@@ -52,44 +57,50 @@ const SignUp = () => {
 
     return (
         <div className="sign-up">
-            <form>
-                <Input
-                    id={`${signUpId}-email`}
-                    name="email"
-                    type="email"
-                    value={email}
-                    handleChange={handleChange}
-                    label="Email"
-                    required
-                />
+            {!isLoading ? (
+                <>
+                    <form>
+                        <Input
+                            id={`${signUpId}-email`}
+                            name="email"
+                            type="email"
+                            value={email}
+                            handleChange={handleChange}
+                            label="Email"
+                            required
+                        />
 
-                <Input
-                    id={`${signUpId}-password`}
-                    name="password"
-                    type="password"
-                    value={password}
-                    handleChange={handleChange}
-                    label="Password"
-                    required
-                />
+                        <Input
+                            id={`${signUpId}-password`}
+                            name="password"
+                            type="password"
+                            value={password}
+                            handleChange={handleChange}
+                            label="Password"
+                            required
+                        />
 
-                <Input
-                    id={`${signUpId}-confirmPassword`}
-                    name="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    handleChange={handleChange}
-                    label="Confirm Password"
-                    required
-                />
-            </form>
-            <div className={styles.buttons}>
-                <Button
-                    content="Sign Up"
-                    handleClick={handleSubmit}
-                    variant="Primary"
-                />
-            </div>
+                        <Input
+                            id={`${signUpId}-confirmPassword`}
+                            name="confirmPassword"
+                            type="password"
+                            value={confirmPassword}
+                            handleChange={handleChange}
+                            label="Confirm Password"
+                            required
+                        />
+                    </form>
+                    <div className={styles.buttons}>
+                        <Button
+                            content="Sign Up"
+                            handleClick={handleSubmit}
+                            variant="Primary"
+                        />
+                    </div>
+                </>
+            ) : (
+                <Spinner />
+            )}
         </div>
     );
 };

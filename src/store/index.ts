@@ -6,24 +6,24 @@ import botListReducer from "@store/reducers/BotList";
 import userReducer from "@store/reducers/User";
 
 const rootReducer = combineReducers({
-  botList: botListReducer,
-  user: userReducer,
+    botList: botListReducer,
+    user: userReducer,
 });
 
 const persistConfig = {
-  key: "root",
-  storage,
-  blacklist: ["user"],
+    key: "root",
+    storage,
+    blacklist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
 
 export const persistor = persistStore(store);

@@ -7,7 +7,7 @@ import styles from "@styles/components/common/Navbar.module.css";
 import { signOut } from "firebase/auth";
 import { auth } from "@googleFirebase/firebase.utils";
 
-const Navbar: React.FC<WithUserType> = ({ currentUser }) => {
+const Navbar: React.FC<WithUserType> = ({ currentUser, isLoading }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -15,20 +15,21 @@ const Navbar: React.FC<WithUserType> = ({ currentUser }) => {
         <div className={styles.navbar}>
             <div className={styles.navigationItems}>
                 <h1
+                    className={styles.header}
                     onClick={() => {
-                        navigate("/");
+                        navigate("/bots");
                     }}
                 >
                     &#129302; My Bots &#129302;
                 </h1>
-                {currentUser ? (
+                {currentUser && (
                     <div>
                         <Button
                             content="🚪 Logout"
                             handleClick={() => {
                                 signOut(auth)
                                     .then(() => {
-                                        navigate("/signIn");
+                                        navigate("/");
                                     })
                                     .catch((error) => {
                                         console.log(error);
@@ -36,7 +37,8 @@ const Navbar: React.FC<WithUserType> = ({ currentUser }) => {
                             }}
                         />
                     </div>
-                ) : location.pathname === "/signIn" ? (
+                )}
+                {location.pathname === "/" ? (
                     <div>
                         <Button
                             content="Sign Up"
@@ -46,14 +48,16 @@ const Navbar: React.FC<WithUserType> = ({ currentUser }) => {
                         />
                     </div>
                 ) : (
-                    <div>
-                        <Button
-                            content="Sign In"
-                            handleClick={() => {
-                                navigate("/signIn");
-                            }}
-                        />
-                    </div>
+                    location.pathname === "/signUp" && (
+                        <div>
+                            <Button
+                                content="Sign In"
+                                handleClick={() => {
+                                    navigate("/");
+                                }}
+                            />
+                        </div>
+                    )
                 )}
             </div>
         </div>

@@ -12,16 +12,22 @@ import SignInPage from "@pages/signIn";
 import SignUpPage from "@pages/signUp";
 import EditBotPage from "@pages/bots/edit";
 import AddBotPage from "@pages/bots/add";
-import BotIndexPage from "@pages/bots";
-import HomeIndexPage from "@pages/index";
+import BotIndexPage from "@pages/bots/botIndexPage";
+import BotListIndexPage from "@pages/bots/botListIndexPage";
 import NotFoundPage from "@pages/notFound";
 import { setUser } from "@store/reducers/User";
 
 import styles from "@styles/App.module.css";
+import Spinner from "@components/common/Spinner";
 
-const App: React.FC<WithUserType> = ({ currentUser = null }) => {
+const App: React.FC<WithUserType> = ({
+    currentUser = null,
+    isLoading = false,
+    setIsLoading = () => {},
+}) => {
     const dispatch = useDispatch();
     useEffect(() => {
+        setIsLoading(true);
         auth.onAuthStateChanged(async (userAuth) => {
             if (userAuth) {
                 const userRef = await createUserProfileDocument(userAuth);
@@ -30,40 +36,50 @@ const App: React.FC<WithUserType> = ({ currentUser = null }) => {
 
                     dispatch(setUser(email));
                 });
+                setIsLoading(false);
             } else {
                 dispatch(setUser(userAuth));
+                setIsLoading(false);
             }
         });
         // eslint-disable-next-line
     }, []);
-
+    console.log(isLoading);
     return (
         <div className={styles.app}>
             <Navbar />
             <Routes>
                 <Route
-                    path="/"
-                    element={userGateIfAbsent(currentUser, <HomeIndexPage />)}
+                    path="/bots"
+                    element={validateUserInApp(isLoading, <BotListIndexPage />)}
                 />
                 <Route
-                    path="signIn"
-                    element={userGateIfPresent(currentUser, <SignInPage />)}
+                    path="/"
+                    element={rerouteUser(
+                        currentUser,
+                        isLoading,
+                        <SignInPage />
+                    )}
                 />
                 <Route
                     path="signUp"
-                    element={userGateIfPresent(currentUser, <SignUpPage />)}
+                    element={rerouteUser(
+                        currentUser,
+                        isLoading,
+                        <SignUpPage />
+                    )}
                 />
                 <Route
                     path="bots/:botId"
-                    element={userGateIfAbsent(currentUser, <BotIndexPage />)}
+                    element={validateUserInApp(isLoading, <BotIndexPage />)}
                 />
                 <Route
                     path="bots/edit/:botId"
-                    element={userGateIfAbsent(currentUser, <EditBotPage />)}
+                    element={validateUserInApp(isLoading, <EditBotPage />)}
                 />
                 <Route
                     path="bots/add"
-                    element={userGateIfAbsent(currentUser, <AddBotPage />)}
+                    element={validateUserInApp(isLoading, <AddBotPage />)}
                 />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
@@ -71,18 +87,25 @@ const App: React.FC<WithUserType> = ({ currentUser = null }) => {
     );
 };
 
-const userGateIfPresent = (
+const rerouteUser = (
     currentUser: string | null,
+    isLoading: boolean,
     element: ReactElement
 ): ReactElement => {
-    return currentUser ? <Navigate to="/" /> : element;
+    if (isLoading) {
+        return <Spinner isPage={true} />;
+    }
+    return currentUser ? <Navigate to="/bots" /> : element;
 };
 
-const userGateIfAbsent = (
-    currentUser: string | null,
+const validateUserInApp = (
+    isLoading: boolean,
     element: ReactElement
 ): ReactElement => {
-    return !currentUser ? <Navigate to="/signIn" /> : element;
+    if (isLoading) {
+        return <Spinner isPage={true} />;
+    }
+    return element;
 };
 
 export default WithUser(App);
